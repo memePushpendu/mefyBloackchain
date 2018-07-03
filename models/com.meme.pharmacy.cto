@@ -1,0 +1,258 @@
+namespace com.meme.pharmacy
+
+/**
+   Bills
+**/
+asset Bills identified by id{
+  o String id
+  --> Users user_id
+  o String bill_number
+  o String discount_type
+  o String discount_amount
+  o String billing_amount_total
+  --> Prescriptions prescription_id
+  --> Users patient_id
+  o String billing_person
+  o String billing_phone_number
+  o String billing_email
+  o String bill_address
+  o String billing_doctor_name
+  o String hash
+  o String creation_date
+  o String update_date
+}
+
+
+/**
+   Bins 
+**/
+asset Bins identified by id{
+  o String id
+  --> Users user_id
+  o String bin_name
+  o String total_row
+  o String total_self
+  o String total_level
+  o String total_bin
+  o String process
+  o String row_naming
+  o String self_naming
+  o String level_naming
+  o String bin_naming
+  o String creation_date
+  o String update_date
+}
+
+/**
+   Pharmacy registration
+**/
+asset Documents identified by id {
+  o String id
+  --> Users user_id
+  o String document_type
+  o String name
+  o String education
+  o String experience
+  o String registration_no
+  o String validity
+  o String remarks
+  o String document_image_url
+  o String creation_date
+  o String update_date
+}
+
+/**
+  Drug type
+**/
+asset DrugTypes identified by id {
+  o String id
+  o String drug_type
+  o String description
+  o String creation_date
+}
+
+/**
+   Orders
+**/
+
+asset Orders identified by id {
+  o String id
+  --> Users user_id 
+  --> Stocks stock_id
+  --> Items item_id
+  o String order_placed
+  o String quantity_ordered
+  o String order_recieved
+  o String notes
+  o String creation_date
+  o String update_date
+}
+
+/**
+   Manufacturers
+**/
+
+asset Manufacturers identified by id {
+  o String id
+  --> Users user_id
+  o String manufacturer_name
+  o String contact_name
+  o String address
+  o String city
+  o String state
+  o String pin 
+  o String country 
+  o String contact_number
+  o String email 
+  o String fax 
+  o String type 
+  o String addi_details
+  o String creation_date
+  o String update_date
+}
+
+/**
+   Stocks
+**/
+
+asset Stocks identified by id {
+  o String id
+  --> Users user_id
+  --> Items item_id
+  o String quantity
+  o String mrp
+  o String purchase_price
+  o String manufacturing_date
+  o String expiry_date
+  --> Manufacturers asset
+  --> Suppliers supplier_id
+  o String batch_number
+  o String selected_to_order
+  o String update_date
+}
+
+asset Items identified by id {
+  o String id
+  -->Users user_id
+  o String name
+  o String form
+  o String RX_name
+  o String description
+  o String drug_type_name
+  --> DrugTypes drug_type_id
+  o String safety_stock
+  o String max_stock
+  o String manufacturer_name
+  --> Manufacturers manufacturer_id
+  o String supplier_name
+  --> Suppliers supplier_id
+  o String strength
+  o String unit
+  o String quantity_per_unit
+  o String substitute_group_id
+  o String enable
+  o String vat 
+  o String other_tax_name
+  o String other_tax_rate
+  o String bin_name 
+  --> Bins bin_id
+  o String lead_time
+  --> Users create_by
+  o String creation_date
+  --> Users updated_by
+  o String update_date
+}
+
+/** 
+   Suppliers
+ **/
+
+ asset Suppliers identified by id {
+   o String id
+   --> Users user_id
+  o String supplier_name
+  o String contact_name
+  o String address 
+  o String city 
+  o String state 
+  o String pin 
+  o String country 
+  o String contact_number 
+  o String email 
+  o String fax 
+  o String type 
+  o String addi_details
+  o String creation_date
+  o String update_date
+ }
+
+ /**
+     Transactions
+ **/
+
+asset Transactions identified by id {
+  o String id
+  --> Users user_id
+  --> Orders order_id 
+  --> Items item_id
+  --> Manufacturers manufacturer_id
+  --> Suppliers supplier_id
+  o String manufacturing_date
+  o String expiry_date
+  o String quantity
+  o String mrp
+  o String purchase_price
+  o String batch_no
+  --> Bins bin_id
+  o String transaction_type
+  --> Bills bill_id
+  o String creation_date
+  o String update_date
+}
+
+/**
+   Prescription
+**/
+
+asset Prescriptions identified by id {
+  o String id 
+  --> Users patient_id
+  --> Users doctor_id
+  o String notes 
+  o String status
+  o String forward_date
+  --> Users forwarded_by
+  o String attribute_1
+}
+
+participant Users identified by id {
+  o String id
+  o String name
+  o String type
+  o String phone_number
+  o String email 
+  o String password
+}
+
+// participant SampleParticipant identified by participantId {
+//   o String participantId
+//   o String firstName
+//   o String lastName
+// }
+
+// asset SampleAsset identified by assetId {
+//   o String assetId
+//   --> SampleParticipant owner
+//   o String value
+// }
+
+// transaction SampleTransaction {
+//   --> SampleAsset asset
+//   o String newValue
+// }
+
+// event SampleEvent {
+//   --> SampleAsset asset
+//   o String oldValue
+//   o String newValue
+// }
